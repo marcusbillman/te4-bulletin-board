@@ -28,6 +28,8 @@ router.post('/', async function (req, res, next) {
     updatedAt: new Date(),
   });
   res.status(201).json(message);
+
+  res.io.emit('message', message);
 });
 
 function isUrl(str) {
