@@ -7,6 +7,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chenfengyuan/vue-qrcode": "^2.0.0-rc.1",
+    "qrcode": "^1.5.0",
     "socket.io-client": "^4.4.0",
     "vue": "^3.2.23",
     "vue-router": "^4.0.12"
