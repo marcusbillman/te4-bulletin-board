@@ -28,15 +28,21 @@ socket.on('message', (message) => {
 
 <template>
   <div class="page">
-    <h1>Board</h1>
-    <div class="messages">
-      <ul>
-        <li v-for="message in messages" :key="message.id">
-          <MessageCard :body="message.body" :type="message.type" />
-        </li>
-      </ul>
-    </div>
+    <ul class="messages">
+      <li v-for="message in messages" :key="message.id">
+        <MessageCard :body="message.body" :type="message.type" />
+      </li>
+    </ul>
   </div>
 </template>
 
-<style></style>
+<style>
+.messages {
+  font-size: 2rem;
+  word-break: break-word;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  gap: 2rem;
+  margin: 2rem;
+}
+</style>
