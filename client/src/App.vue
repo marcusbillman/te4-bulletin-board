@@ -17,4 +17,11 @@
   color: #2c3e50;
   margin-top: 60px;
 }
+
+ul,
+li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
 </style>

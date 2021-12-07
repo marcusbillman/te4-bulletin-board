@@ -1,5 +1,9 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const serverAddress = router.currentRoute.value.query.server;
 
 const messageBodyRaw = ref('');
 
@@ -8,7 +12,7 @@ async function handleSubmit(event) {
     body: messageBodyRaw.value,
   };
 
-  await fetch('http://localhost:1234/api/v1/messages', {
+  await fetch(`//${serverAddress}:1234/api/v1/messages`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
