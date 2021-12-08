@@ -22,7 +22,7 @@ socket.on('connect', (socket) => {
   console.log('Connected to server');
 });
 socket.on('message', (message) => {
-  messages.value.push(message);
+  messages.value.unshift(message);
 });
 </script>
 
@@ -30,7 +30,7 @@ socket.on('message', (message) => {
   <div class="page">
     <ul class="messages">
       <li v-for="message in messages" :key="message.id">
-        <MessageCard :body="message.body" :type="message.type" />
+        <MessageCard :message="message" />
       </li>
     </ul>
   </div>

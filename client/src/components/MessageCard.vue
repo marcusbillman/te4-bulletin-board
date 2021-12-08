@@ -1,14 +1,17 @@
 <script setup>
 import { defineProps } from 'vue';
 
-defineProps(['body', 'type']);
+defineProps(['message']);
 </script>
 
 <template>
   <div class="card">
-    <p v-if="type !== 'image'">{{ body }}</p>
-    <vue-qrcode v-if="type === 'link'" :value="body"></vue-qrcode>
-    <img v-if="type === 'image'" :src="body" alt="Image" />
+    <p v-if="message.type !== 'image'">{{ message.body }}</p>
+    <vue-qrcode
+      v-if="message.type === 'link'"
+      :value="message.body"
+    ></vue-qrcode>
+    <img v-if="message.type === 'image'" :src="message.body" alt="Image" />
   </div>
 </template>
 
