@@ -18,12 +18,9 @@ router.post('/', async function (req, res, next) {
     });
   }
 
-  let type = 'text';
-  if (isUrl(req.body.body)) type = 'link';
-
   const message = await Message.create({
     ...req.body,
-    type,
+    type: getMessageType(req.body.body),
     createdAt: new Date(),
     updatedAt: new Date(),
   });
@@ -32,17 +29,24 @@ router.post('/', async function (req, res, next) {
   res.io.emit('message', message);
 });
 
+function getMessageType(body) {
+  if (isUrl(body)) {
+    if (isImageUrl(body)) return 'image';
+    return 'link';
+  }
+  return 'text';
+}
+
 function isUrl(str) {
-  const pattern = new RegExp(
-    '^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$',
-    'i'
-  );
+  const pattern = new RegExp('^(https?:\\/\\/)?[^\\s]+\\.[^\\s]+$', 'i');
   return !!pattern.test(str);
+}
+
+function isImageUrl(url) {
+  const extension = url.split('.').pop();
+  return ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp', 'tiff', 'bmp'].includes(
+    extension
+  );
 }
 
 module.exports = router;
