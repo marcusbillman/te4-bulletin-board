@@ -42,7 +42,6 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  max-height: 30rem;
   padding: 1rem;
   border-radius: 0.5rem;
   background-color: #ffffff;
@@ -50,6 +49,7 @@ body {
 }
 
 .card__main {
+  height: 100%;
   flex-grow: 1;
 }
 
