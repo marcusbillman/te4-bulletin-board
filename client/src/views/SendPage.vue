@@ -23,6 +23,7 @@ async function handleSubmit(event) {
   });
 
   messageBodyRaw.value = '';
+  messagePinned.value = false;
 }
 </script>
 
