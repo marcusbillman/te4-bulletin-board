@@ -40,7 +40,7 @@ button {
   width: 100%;
   display: block;
   font: inherit;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   border-radius: 0.5rem;
   padding: 0.5em;
 }

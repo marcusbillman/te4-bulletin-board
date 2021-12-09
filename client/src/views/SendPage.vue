@@ -47,7 +47,7 @@ async function handleSubmit(event) {
             type="text"
             name="author"
             id="messageAuthor"
-            placeholder="Leave blank to get a random name"
+            placeholder="Leave blank for random name"
           />
         </div>
         <div>
