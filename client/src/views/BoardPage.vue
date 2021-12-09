@@ -6,17 +6,25 @@ import MessageCard from '@/components/MessageCard.vue';
 
 const router = useRouter();
 const serverAddress = router.currentRoute.value.query.server;
-
 const sendPageUrl = location.href.replace('/board', '');
 
-// Populate messages with data from the database
 const messages = ref([]);
 const pinnedMessages = computed(() =>
   messages.value.filter((message) => message.pinned)
 );
-const unpinnedMessages = computed(() =>
-  messages.value.filter((message) => !message.pinned)
+
+const thresholdDate = ref(null);
+updateThresholdDate();
+setInterval(() => {
+  updateThresholdDate();
+}, 1000);
+const recentNonPinnedMessages = computed(() =>
+  messages.value.filter((message) => {
+    const messageCreationDate = new Date(message.createdAt);
+    return !message.pinned && messageCreationDate > thresholdDate.value;
+  })
 );
+
 fetch(`//${serverAddress}:1234/api/v1/messages`)
   .then((res) => res.json())
   .then((data) => {
@@ -30,7 +38,7 @@ socket.on('message', (message) => {
 });
 
 // Header clock
-const date = ref(null);
+const date = ref(new Date());
 const formattedTime = computed(() => {
   const hours = padWithZero(date.value.getHours());
   const minutes = padWithZero(date.value.getMinutes());
@@ -43,6 +51,11 @@ const formattedDate = computed(() => {
 setInterval(() => {
   date.value = new Date();
 }, 1000);
+
+function updateThresholdDate() {
+  const minute = 1000 * 60;
+  thresholdDate.value = Date.now() - 10 * minute;
+}
 const padWithZero = (number) => (number < 10 ? `0${number}` : number);
 </script>
 
@@ -80,7 +93,7 @@ const padWithZero = (number) => (number < 10 ? `0${number}` : number);
       </ul>
       <div class="separator"></div>
       <ul class="messages">
-        <li v-for="message in unpinnedMessages" :key="message.id">
+        <li v-for="message in recentNonPinnedMessages" :key="message.id">
           <MessageCard :message="message" />
         </li>
       </ul>
