@@ -25,4 +25,14 @@ li {
   padding: 0;
   margin: 0;
 }
+
+input,
+textarea,
+button {
+  font: inherit;
+}
+
+.page {
+  padding: 0 32px;
+}
 </style>
