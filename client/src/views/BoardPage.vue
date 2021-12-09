@@ -28,20 +28,40 @@ const socket = io(`//${serverAddress}:1234`);
 socket.on('message', (message) => {
   messages.value.unshift(message);
 });
+
+// Header clock
+const date = ref(null);
+const formattedTime = computed(() => {
+  const hours = padWithZero(date.value.getHours());
+  const minutes = padWithZero(date.value.getMinutes());
+  const seconds = padWithZero(date.value.getSeconds());
+  return `${hours}:${minutes}:${seconds}`;
+});
+const formattedDate = computed(() => {
+  return date.value.toLocaleDateString();
+});
+setInterval(() => {
+  date.value = new Date();
+}, 1000);
+const padWithZero = (number) => (number < 10 ? `0${number}` : number);
 </script>
 
 <template>
   <div class="page">
     <header class="header">
       <div class="header__left">
-        <h1>TE4 Bulletin Board</h1>
+        <h1 class="header__heading">TE4 Bulletin Board</h1>
+      </div>
+      <div class="header__center">
+        <p class="header__time">{{ formattedTime }}</p>
+        <p class="header__date">{{ formattedDate }}</p>
       </div>
       <div class="header__right">
-        <p class="header__instruction">Add stuff to this board</p>
+        <p class="header__instruction">Add to board</p>
         <vue-qrcode
           :value="sendPageUrl"
           :options="{
-            scale: 3,
+            scale: 2,
             margin: 0,
             color: {
               dark: '#ffffff',
@@ -80,11 +100,31 @@ socket.on('message', (message) => {
 .header__left {
   display: flex;
   align-items: center;
+  width: 100%;
+}
+
+.header__heading {
+  font-size: 1.5rem;
+}
+
+.header__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.header__time {
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin-bottom: 0.1em;
 }
 
 .header__right {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  width: 100%;
   gap: 1rem;
 }
 
