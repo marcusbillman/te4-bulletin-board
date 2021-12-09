@@ -41,6 +41,9 @@ const socket = io(`//${serverAddress}:1234`);
 socket.on('message', (message) => {
   messages.value.unshift(message);
 });
+socket.on('delete', (messageId) => {
+  messages.value = messages.value.filter((message) => message.id != messageId);
+});
 
 // Header clock
 const date = ref(new Date());
@@ -62,6 +65,17 @@ function updateThresholdDate() {
   thresholdDate.value = Date.now() - 10 * minute;
 }
 const padWithZero = (number) => (number < 10 ? `0${number}` : number);
+
+// Delete message
+function handleMessageDelete(message) {
+  const userConfirmed = confirm(
+    `Do you want to delete this message?\n${message.body}`
+  );
+  if (!userConfirmed) return;
+  fetch(`//${serverAddress}:1234/api/v1/messages/${message.id}`, {
+    method: 'DELETE',
+  });
+}
 </script>
 
 <template>
@@ -93,13 +107,13 @@ const padWithZero = (number) => (number < 10 ? `0${number}` : number);
     <main class="container">
       <ul class="messages messages--pinned">
         <li v-for="message in pinnedMessages" :key="message.id">
-          <MessageCard :message="message" />
+          <MessageCard @delete="handleMessageDelete" :message="message" />
         </li>
       </ul>
       <div class="separator"></div>
       <ul class="messages">
         <li v-for="message in recentNonPinnedMessages" :key="message.id">
-          <MessageCard :message="message" />
+          <MessageCard @delete="handleMessageDelete" :message="message" />
         </li>
       </ul>
     </main>

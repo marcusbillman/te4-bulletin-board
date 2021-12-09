@@ -1,11 +1,20 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, defineEmits } from 'vue';
 
-defineProps(['message']);
+const props = defineProps(['message']);
+const emit = defineEmits(['delete']);
+
+function handleClick() {
+  emit('delete', props.message);
+}
 </script>
 
 <template>
-  <article class="card" :class="message.pinned ? 'card--pinned' : ''">
+  <article
+    @click="handleClick"
+    class="card"
+    :class="message.pinned ? 'card--pinned' : ''"
+  >
     <div class="card__main">
       <p v-if="message.type !== 'image'" class="card__body">
         {{ message.body }}
@@ -47,6 +56,11 @@ body {
   border-radius: 0.5rem;
   background-color: #ffffff;
   margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.card:hover {
+  background-color: #ffacac;
 }
 
 .card--pinned {

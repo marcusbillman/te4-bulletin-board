@@ -37,6 +37,17 @@ router.post('/', async function (req, res, next) {
   res.io.emit('message', message);
 });
 
+router.delete('/:id', async function (req, res, next) {
+  await Message.destroy({
+    where: {
+      id: req.params.id,
+    },
+  });
+  res.status(204).send();
+
+  res.io.emit('delete', req.params.id);
+});
+
 function getMessageType(body) {
   if (isUrl(body)) {
     if (isImageUrl(body)) return 'image';
