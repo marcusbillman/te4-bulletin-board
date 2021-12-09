@@ -20,7 +20,7 @@
 }
 
 main {
-  margin-top: 2rem;
+  margin: 2rem 0;
 }
 
 .container {
