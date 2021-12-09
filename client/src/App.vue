@@ -16,7 +16,7 @@
 }
 
 #app {
-  font-family: Arial, sans-serif;
+  font-family: 'Readex Pro', sans-serif;
 }
 
 main {
