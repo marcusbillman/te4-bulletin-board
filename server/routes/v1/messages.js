@@ -1,6 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const { Message } = require('../../models/');
+const {
+  uniqueNamesGenerator,
+  adjectives,
+  colors,
+  animals,
+} = require('unique-names-generator');
 
 // GET all messages
 router.get('/', async function (req, res, next) {
@@ -22,6 +28,7 @@ router.post('/', async function (req, res, next) {
     ...req.body,
     type: getMessageType(req.body.body),
     pinned: req.body.pinned,
+    author: req.body.author || getRandomAuthor(),
     createdAt: new Date(),
     updatedAt: new Date(),
   });
@@ -36,6 +43,15 @@ function getMessageType(body) {
     return 'link';
   }
   return 'text';
+}
+
+function getRandomAuthor() {
+  return uniqueNamesGenerator({
+    dictionaries: [adjectives, colors, animals],
+    style: 'capital',
+    separator: ' ',
+    length: 2,
+  });
 }
 
 function isUrl(str) {

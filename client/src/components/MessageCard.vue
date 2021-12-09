@@ -18,7 +18,8 @@ defineProps(['message']);
       />
     </div>
     <footer class="card__footer">
-      <p class="card__date">
+      <p class="card__author-date">
+        {{ message.author }} •
         {{ new Date(message.createdAt).toLocaleString() }}
       </p>
       <vue-qrcode
@@ -70,7 +71,7 @@ body {
   align-items: end;
 }
 
-.card__date {
+.card__author-date {
   font-size: 1rem;
   color: #616161;
 }

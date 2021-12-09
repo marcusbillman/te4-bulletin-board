@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       body: DataTypes.STRING,
       type: DataTypes.STRING,
       pinned: DataTypes.BOOLEAN,
+      author: DataTypes.STRING,
     },
     {
       sequelize,
