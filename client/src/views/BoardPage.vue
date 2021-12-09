@@ -7,6 +7,11 @@ import MessageCard from '@/components/MessageCard.vue';
 const router = useRouter();
 const serverAddress = router.currentRoute.value.query.server;
 const sendPageUrl = location.href.replace('/board', '');
+if (location.href.includes('localhost')) {
+  alert(
+    "You have connected using localhost. The QR code won't work unless you use an actual IP address."
+  );
+}
 
 const messages = ref([]);
 const pinnedMessages = computed(() =>
