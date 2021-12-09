@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import io from 'socket.io-client';
 import MessageCard from '@/components/MessageCard.vue';
@@ -11,6 +11,12 @@ const sendPageUrl = location.href.replace('/board', '');
 
 // Populate messages with data from the database
 const messages = ref([]);
+const pinnedMessages = computed(() =>
+  messages.value.filter((message) => message.pinned)
+);
+const unpinnedMessages = computed(() =>
+  messages.value.filter((message) => !message.pinned)
+);
 fetch(`//${serverAddress}:1234/api/v1/messages`)
   .then((res) => res.json())
   .then((data) => {
@@ -19,9 +25,6 @@ fetch(`//${serverAddress}:1234/api/v1/messages`)
 
 // Web socket stuff
 const socket = io(`//${serverAddress}:1234`);
-socket.on('connect', (socket) => {
-  console.log('Connected to server');
-});
 socket.on('message', (message) => {
   messages.value.unshift(message);
 });
@@ -49,11 +52,19 @@ socket.on('message', (message) => {
         ></vue-qrcode>
       </div>
     </header>
-    <ul class="messages">
-      <li v-for="message in messages" :key="message.id">
-        <MessageCard :message="message" />
-      </li>
-    </ul>
+    <main class="container">
+      <ul class="messages messages--pinned">
+        <li v-for="message in pinnedMessages" :key="message.id">
+          <MessageCard :message="message" />
+        </li>
+      </ul>
+      <div class="separator"></div>
+      <ul class="messages">
+        <li v-for="message in unpinnedMessages" :key="message.id">
+          <MessageCard :message="message" />
+        </li>
+      </ul>
+    </main>
   </div>
 </template>
 
@@ -87,6 +98,11 @@ socket.on('message', (message) => {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
   gap: 2rem;
-  margin: 2rem;
+}
+
+.separator {
+  height: 1px;
+  background: #ccc;
+  margin: 2rem 0;
 }
 </style>

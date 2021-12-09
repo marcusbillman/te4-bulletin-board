@@ -5,7 +5,7 @@ defineProps(['message']);
 </script>
 
 <template>
-  <article class="card">
+  <article class="card" :class="message.pinned ? 'card--pinned' : ''">
     <div class="card__main">
       <p v-if="message.type !== 'image'" class="card__body">
         {{ message.body }}
@@ -46,6 +46,10 @@ body {
   border-radius: 0.5rem;
   background-color: #ffffff;
   margin-bottom: 1rem;
+}
+
+.card--pinned {
+  color: #dd0890;
 }
 
 .card__main {

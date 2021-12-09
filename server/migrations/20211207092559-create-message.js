@@ -6,25 +6,28 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       body: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       type: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+      },
+      pinned: {
+        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Messages');
-  }
+  },
 };

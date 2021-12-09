@@ -21,6 +21,7 @@ router.post('/', async function (req, res, next) {
   const message = await Message.create({
     ...req.body,
     type: getMessageType(req.body.body),
+    pinned: req.body.pinned,
     createdAt: new Date(),
     updatedAt: new Date(),
   });

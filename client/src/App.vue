@@ -19,6 +19,14 @@
   font-family: Arial, sans-serif;
 }
 
+main {
+  margin-top: 2rem;
+}
+
+.container {
+  padding: 0 32px;
+}
+
 ul,
 li {
   list-style-type: none;
@@ -30,9 +38,5 @@ input,
 textarea,
 button {
   font: inherit;
-}
-
-.page {
-  padding: 0 32px;
 }
 </style>
