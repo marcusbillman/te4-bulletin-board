@@ -4,6 +4,12 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const serverAddress = router.currentRoute.value.query.server;
+const boardPageUrl = location.href.replace('/?', '/board?');
+if (location.href.includes('localhost')) {
+  alert(
+    "You have connected using localhost. Some features won't work unless you use an actual IP address."
+  );
+}
 
 const messageAuthor = ref('');
 const messageBodyRaw = ref('');
@@ -66,6 +72,7 @@ async function handleSubmit(event) {
           <label for="messagePinned">Pin your message to the top</label>
         </div>
         <button type="submit" class="button">Add to board</button>
+        <a :href="boardPageUrl" class="button button--secondary">Show board</a>
       </form>
     </main>
   </div>
@@ -90,6 +97,8 @@ label {
 }
 
 .button {
+  display: inline-flex;
+  justify-content: center;
   font: inherit;
   font-weight: 700;
   color: white;
@@ -97,6 +106,12 @@ label {
   border: none;
   padding: 1em;
   border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.button--secondary {
+  background: white;
+  color: #240b9a;
 }
 
 .checkbox {
