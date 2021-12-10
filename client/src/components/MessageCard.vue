@@ -61,6 +61,8 @@ body {
 
 .card--pinned {
   color: #dd0890;
+  outline: 2px solid #dd0890;
+  outline-offset: -2px;
 }
 
 .card__main {
