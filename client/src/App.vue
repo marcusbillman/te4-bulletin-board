@@ -25,7 +25,13 @@ main {
 }
 
 .container {
+  width: 100%;
   padding: 0 1rem;
+}
+
+.container:not(.container--wide) {
+  max-width: 50rem;
+  margin-inline: auto;
 }
 
 ul,

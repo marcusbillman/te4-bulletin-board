@@ -109,7 +109,7 @@ function handleMessageDelete(message) {
         ></vue-qrcode>
       </div>
     </header>
-    <main class="container">
+    <main class="container container--wide">
       <ul class="messages">
         <transition-group name="list">
           <li v-for="message in allSortedMessages" :key="message.id">
