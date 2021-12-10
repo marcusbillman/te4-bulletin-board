@@ -20,7 +20,12 @@ router.get('/', async function (req, res, next) {
 router.post('/', async function (req, res, next) {
   if (!req.body.body) {
     return res.status(400).json({
-      error: 'Message body is required',
+      error: "Message can't be blank",
+    });
+  }
+  if (req.body.body.length > 250) {
+    return res.status(400).json({
+      error: "Message can't be longer than 250 characters",
     });
   }
 

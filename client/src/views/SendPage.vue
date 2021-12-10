@@ -22,14 +22,18 @@ async function handleSubmit(event) {
     author: messageAuthor.value,
   };
 
-  await fetch(`//${serverAddress}:1234/api/v1/messages`, {
+  const response = await fetch(`//${serverAddress}:1234/api/v1/messages`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(message),
   });
-
+  const data = await response.json();
+  if (response.status >= 400 && response.status < 600) {
+    alert(data.error);
+    return;
+  }
   messageBodyRaw.value = '';
   messagePinned.value = false;
 }
@@ -58,7 +62,8 @@ async function handleSubmit(event) {
             name="body"
             id="messageBody"
             rows="3"
-            placeholder="Text message, web link or image link"
+            placeholder="Text or web/image link. Max 250 characters."
+            maxlength="250"
           ></textarea>
         </div>
         <div>
