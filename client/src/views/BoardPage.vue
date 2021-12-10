@@ -126,13 +126,13 @@ function handleMessageDelete(message) {
   justify-content: space-between;
   background: #240b9a;
   color: white;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .header__left {
+  width: 100%;
   display: flex;
   align-items: center;
-  width: 100%;
 }
 
 .header__heading {
@@ -140,6 +140,7 @@ function handleMessageDelete(message) {
 }
 
 .header__center {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -153,10 +154,10 @@ function handleMessageDelete(message) {
 }
 
 .header__right {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  width: 100%;
   gap: 1rem;
 }
 
@@ -168,7 +169,7 @@ function handleMessageDelete(message) {
   font-size: 2rem;
   word-break: break-word;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
   gap: 2rem;
 }
 
@@ -176,5 +177,14 @@ function handleMessageDelete(message) {
   height: 1px;
   background: #ccc;
   margin: 2rem 0;
+}
+
+@media (max-width: 768px) {
+  .header__left {
+    display: none;
+  }
+  .header__center {
+    display: none;
+  }
 }
 </style>

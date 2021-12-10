@@ -49,13 +49,9 @@ body {
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
   padding: 1rem;
   border-radius: 0.5rem;
   background-color: #ffffff;
-  margin-bottom: 1rem;
   cursor: pointer;
 }
 
@@ -74,9 +70,9 @@ body {
 
 .card__img {
   width: 100%;
-  height: auto;
-  max-height: 100%;
-  object-fit: cover;
+  height: 100%;
+  max-height: 30vh;
+  object-fit: scale-down;
 }
 
 .card__footer {

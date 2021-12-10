@@ -15,8 +15,9 @@
   box-sizing: border-box;
 }
 
-#app {
+body {
   font-family: 'Readex Pro', sans-serif;
+  overflow-y: scroll;
 }
 
 main {
@@ -24,7 +25,7 @@ main {
 }
 
 .container {
-  padding: 0 32px;
+  padding: 0 1rem;
 }
 
 ul,
