@@ -179,11 +179,23 @@ function handleMessageDelete(message) {
   margin: 2rem 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 50rem) {
+  .header__center {
+    display: none;
+  }
+}
+
+@media (max-width: 40rem) {
   .header__left {
     display: none;
   }
-  .header__center {
+  .messages {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 20rem) {
+  .header__instruction {
     display: none;
   }
 }
