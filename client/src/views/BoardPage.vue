@@ -94,7 +94,7 @@ function handleMessageDelete(message) {
         <p class="header__date">{{ formattedDate }}</p>
       </div>
       <div class="header__right">
-        <p class="header__instruction">Add to board</p>
+        <a :href="sendPageUrl" class="header__instruction">Add to board</a>
         <vue-qrcode
           :value="sendPageUrl"
           :options="{
