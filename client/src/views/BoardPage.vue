@@ -106,15 +106,19 @@ function handleMessageDelete(message) {
     </header>
     <main class="container">
       <ul class="messages messages--pinned">
-        <li v-for="message in pinnedMessages" :key="message.id">
-          <MessageCard @delete="handleMessageDelete" :message="message" />
-        </li>
+        <transition-group name="list">
+          <li v-for="message in pinnedMessages" :key="message.id">
+            <MessageCard @delete="handleMessageDelete" :message="message" />
+          </li>
+        </transition-group>
       </ul>
       <div class="separator"></div>
       <ul class="messages">
-        <li v-for="message in recentNonPinnedMessages" :key="message.id">
-          <MessageCard @delete="handleMessageDelete" :message="message" />
-        </li>
+        <transition-group name="list">
+          <li v-for="message in recentNonPinnedMessages" :key="message.id">
+            <MessageCard @delete="handleMessageDelete" :message="message" />
+          </li>
+        </transition-group>
       </ul>
     </main>
   </div>
@@ -198,5 +202,20 @@ function handleMessageDelete(message) {
   .header__instruction {
     display: none;
   }
+}
+
+.list-enter-from,
+.list-leave-to {
+  transform: rotate(-15deg) scale(0);
+  opacity: 0;
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s;
+}
+
+.list-move {
+  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 </style>
