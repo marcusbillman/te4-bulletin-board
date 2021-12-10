@@ -40,6 +40,7 @@ function handleClick() {
         class="card__qrcode"
       ></vue-qrcode>
     </footer>
+    <span class="material-icons">delete_forever</span>
   </article>
 </template>
 
@@ -49,14 +50,43 @@ body {
 }
 
 .card {
+  position: relative;
   padding: 1rem;
   border-radius: 0.5rem;
   background-color: #ffffff;
   cursor: pointer;
+  transition: background 0.2s;
 }
 
-.card:hover {
-  background-color: #ffacac;
+.material-icons {
+  color: #dd0890;
+  font-size: 3rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 1;
+}
+
+.card:hover .material-icons {
+  opacity: 1;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: white;
+  border-radius: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+
+.card:hover::after {
+  opacity: 0.8;
 }
 
 .card--pinned {
