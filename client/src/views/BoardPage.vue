@@ -30,6 +30,11 @@ const recentNonPinnedMessages = computed(() =>
   })
 );
 
+const allSortedMessages = computed(() => [
+  ...pinnedMessages.value,
+  ...recentNonPinnedMessages.value,
+]);
+
 fetch(`//${serverAddress}:1234/api/v1/messages`)
   .then((res) => res.json())
   .then((data) => {
@@ -105,17 +110,9 @@ function handleMessageDelete(message) {
       </div>
     </header>
     <main class="container">
-      <ul class="messages messages--pinned">
-        <transition-group name="list">
-          <li v-for="message in pinnedMessages" :key="message.id">
-            <MessageCard @delete="handleMessageDelete" :message="message" />
-          </li>
-        </transition-group>
-      </ul>
-      <div class="separator"></div>
       <ul class="messages">
         <transition-group name="list">
-          <li v-for="message in recentNonPinnedMessages" :key="message.id">
+          <li v-for="message in allSortedMessages" :key="message.id">
             <MessageCard @delete="handleMessageDelete" :message="message" />
           </li>
         </transition-group>
@@ -175,12 +172,6 @@ function handleMessageDelete(message) {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
   gap: 2rem;
-}
-
-.separator {
-  height: 1px;
-  background: #ccc;
-  margin: 2rem 0;
 }
 
 @media (max-width: 50rem) {
