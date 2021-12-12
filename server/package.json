@@ -6,6 +6,7 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@prisma/client": "^3.6.0",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
@@ -18,6 +19,7 @@
     "unique-names-generator": "^4.6.0"
   },
   "devDependencies": {
+    "prisma": "^3.6.0",
     "sequelize-cli": "^6.3.0"
   }
 }
