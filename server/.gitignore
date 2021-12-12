@@ -60,5 +60,6 @@ typings/
 # next.js build output
 .next
 
-# SQLite database files
+# Database files
 *.sqlite3
+*.db
