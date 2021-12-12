@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Message } = require('../../models/');
+const { PrismaClient } = require('@prisma/client');
 const {
   uniqueNamesGenerator,
   adjectives,
@@ -8,12 +8,18 @@ const {
   animals,
 } = require('unique-names-generator');
 
+const prisma = new PrismaClient();
+
 // GET all messages
 router.get('/', async function (req, res, next) {
-  const messages = await Message.findAll({
-    order: [['createdAt', 'DESC']],
-  });
-  res.json(messages);
+  try {
+    const messages = await prisma.message.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
+    res.json(messages);
+  } catch (err) {
+    next(err);
+  }
 });
 
 // POST a message
@@ -29,28 +35,34 @@ router.post('/', async function (req, res, next) {
     });
   }
 
-  const message = await Message.create({
-    ...req.body,
-    type: getMessageType(req.body.body),
-    pinned: req.body.pinned,
-    author: req.body.author || getRandomAuthor(),
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  });
-  res.status(201).json(message);
-
-  res.io.emit('message', message);
+  try {
+    const message = await prisma.message.create({
+      data: {
+        ...req.body,
+        type: getMessageType(req.body.body),
+        pinned: req.body.pinned,
+        author: req.body.author || getRandomAuthor(),
+      },
+    });
+    res.status(201).json(message);
+    res.io.emit('message', message);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.delete('/:id', async function (req, res, next) {
-  await Message.destroy({
-    where: {
-      id: req.params.id,
-    },
-  });
-  res.status(204).send();
-
-  res.io.emit('delete', req.params.id);
+  try {
+    await prisma.message.delete({
+      where: {
+        id: Number(req.params.id),
+      },
+    });
+    res.status(204).send();
+    res.io.emit('delete', req.params.id);
+  } catch (error) {
+    next(error);
+  }
 });
 
 function getMessageType(body) {
