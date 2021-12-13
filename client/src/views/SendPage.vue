@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 
-const serverAddress = import.meta.env.API_URL || 'localhost:1234';
+const serverAddress = import.meta.env.VITE_API_URL || 'localhost:1234';
 const boardPageUrl = location.href.replace('/?', '/board?');
 if (location.href.includes('localhost')) {
   alert(

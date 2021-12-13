@@ -3,7 +3,7 @@ import { ref, computed } from 'vue';
 import io from 'socket.io-client';
 import MessageCard from '@/components/MessageCard.vue';
 
-const serverAddress = import.meta.env.API_URL || 'localhost:1234';
+const serverAddress = import.meta.env.VITE_API_URL || 'localhost:1234';
 const sendPageUrl = location.href.replace('/board', '');
 if (location.href.includes('localhost')) {
   alert(
