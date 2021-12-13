@@ -1,9 +1,7 @@
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
 
-const router = useRouter();
-const serverAddress = router.currentRoute.value.query.server;
+const serverAddress = import.meta.env.API_URL || 'localhost:1234';
 const boardPageUrl = location.href.replace('/?', '/board?');
 if (location.href.includes('localhost')) {
   alert(
@@ -22,7 +20,7 @@ async function handleSubmit(event) {
     author: messageAuthor.value,
   };
 
-  const response = await fetch(`//${serverAddress}:1234/api/v1/messages`, {
+  const response = await fetch(`//${serverAddress}/api/v1/messages`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
