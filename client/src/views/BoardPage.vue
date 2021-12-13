@@ -4,8 +4,7 @@ import { useRouter } from 'vue-router';
 import io from 'socket.io-client';
 import MessageCard from '@/components/MessageCard.vue';
 
-const router = useRouter();
-const serverAddress = router.currentRoute.value.query.server;
+const serverAddress = process.env.API_URL;
 const sendPageUrl = location.href.replace('/board', '');
 if (location.href.includes('localhost')) {
   alert(
