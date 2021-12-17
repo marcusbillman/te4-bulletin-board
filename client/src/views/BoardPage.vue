@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import MessageCard from '@/components/MessageCard.vue';
 
 const serverAddress = import.meta.env.VITE_API_URL || 'http://localhost:1234';
+const sendPageUrl = location.href.replace('/board', '');
 
 const messages = ref([]);
 const pinnedMessages = computed(() =>
@@ -86,9 +87,9 @@ function handleMessageDelete(message) {
         <p class="header__date">{{ formattedDate }}</p>
       </div>
       <div class="header__right">
-        <a href="/" class="header__instruction">Add to board</a>
+        <a :href="sendPageUrl" class="header__instruction">Add to board</a>
         <vue-qrcode
-          value="/"
+          :value="sendPageUrl"
           :options="{
             scale: 2,
             margin: 0,
