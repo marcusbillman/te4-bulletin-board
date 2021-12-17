@@ -20,7 +20,7 @@ async function handleSubmit(event) {
     author: messageAuthor.value,
   };
 
-  const response = await fetch(`//${serverAddress}/api/v1/messages`, {
+  const response = await fetch(`${serverAddress}/api/v1/messages`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

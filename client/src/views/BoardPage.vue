@@ -33,14 +33,14 @@ const allSortedMessages = computed(() => [
   ...recentNonPinnedMessages.value,
 ]);
 
-fetch(`//${serverAddress}/api/v1/messages`)
+fetch(`${serverAddress}/api/v1/messages`)
   .then((res) => res.json())
   .then((data) => {
     messages.value = data;
   });
 
 // Web socket stuff
-const socket = io(`//${serverAddress}`);
+const socket = io(`${serverAddress}`);
 socket.on('message', (message) => {
   messages.value.unshift(message);
 });
@@ -75,7 +75,7 @@ function handleMessageDelete(message) {
     `Do you want to delete this message?\n${message.body}`
   );
   if (!userConfirmed) return;
-  fetch(`//${serverAddress}/api/v1/messages/${message.id}`, {
+  fetch(`${serverAddress}/api/v1/messages/${message.id}`, {
     method: 'DELETE',
   });
 }
