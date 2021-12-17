@@ -1,13 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 
-const serverAddress = import.meta.env.VITE_API_URL || 'localhost:1234';
-const boardPageUrl = location.href.replace('/?', '/board?');
-if (location.href.includes('localhost')) {
-  alert(
-    "You have connected using localhost. Some features won't work unless you use an actual IP address."
-  );
-}
+const serverAddress = import.meta.env.VITE_API_URL || 'http://localhost:1234';
 
 const messageAuthor = ref('');
 const messageBodyRaw = ref('');
@@ -75,7 +69,7 @@ async function handleSubmit(event) {
           <label for="messagePinned">Pin your message to the top</label>
         </div>
         <button type="submit" class="button">Add to board</button>
-        <a :href="boardPageUrl" class="button button--secondary">Show board</a>
+        <a href="/board" class="button button--secondary">Show board</a>
       </form>
     </main>
   </div>
