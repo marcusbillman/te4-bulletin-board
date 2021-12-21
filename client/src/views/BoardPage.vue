@@ -1,15 +1,19 @@
 <script setup>
 import { ref, computed } from 'vue';
+import { useRoute } from 'vue-router';
 import io from 'socket.io-client';
 import MessageCard from '@/components/MessageCard.vue';
 
 const serverAddress = import.meta.env.VITE_API_URL || 'http://localhost:1234';
 const sendPageUrl = location.href.replace('/board', '');
 
+const route = useRoute();
+const boardId = route.params.boardId;
+
 const messages = ref([]);
-const pinnedMessages = computed(() =>
-  messages.value.filter((message) => message.pinned)
-);
+const pinnedMessages = computed(() => {
+  return messages.value.filter((message) => message.pinned);
+});
 
 const thresholdDate = ref(null);
 updateThresholdDate();
@@ -28,11 +32,17 @@ const allSortedMessages = computed(() => [
   ...recentNonPinnedMessages.value,
 ]);
 
-fetch(`${serverAddress}/api/v1/messages`)
-  .then((res) => res.json())
-  .then((data) => {
-    messages.value = data;
-  });
+const board = ref({});
+(async function fetchBoard(boardId) {
+  const res = await fetch(`${serverAddress}/api/v1/boards/${boardId}`);
+  let data = await res.json();
+
+  // API gives error if board doesn't exist
+  if (data.error) alert(data.error);
+
+  board.value = data;
+  messages.value = board.value.messages;
+})(boardId);
 
 // Web socket stuff
 const socket = io(`${serverAddress}`);
@@ -80,7 +90,7 @@ function handleMessageDelete(message) {
   <div class="page">
     <header class="header">
       <div class="header__left">
-        <h1 class="header__heading">TE4 Bulletin Board</h1>
+        <h1 class="header__heading">{{ board.id }}</h1>
       </div>
       <div class="header__center">
         <p class="header__time">{{ formattedTime }}</p>

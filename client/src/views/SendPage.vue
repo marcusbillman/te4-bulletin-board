@@ -1,7 +1,10 @@
 <script setup>
 import { ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 const serverAddress = import.meta.env.VITE_API_URL || 'http://localhost:1234';
+const route = useRoute();
+const boardId = route.params.boardId;
 
 const messageAuthor = ref('');
 const messageBodyRaw = ref('');
@@ -12,6 +15,7 @@ async function handleSubmit(event) {
     body: messageBodyRaw.value,
     pinned: messagePinned.value,
     author: messageAuthor.value,
+    boardId,
   };
 
   const response = await fetch(`${serverAddress}/api/v1/messages`, {
@@ -34,7 +38,7 @@ async function handleSubmit(event) {
 <template>
   <div class="page">
     <main class="container">
-      <h1>TE4 Bulletin Board</h1>
+      <h1>Add message to {{ boardId }}</h1>
       <form @submit.prevent="handleSubmit" class="form">
         <div>
           <label for="messageAuthor">Your name</label>
@@ -69,7 +73,9 @@ async function handleSubmit(event) {
           <label for="messagePinned">Pin your message to the top</label>
         </div>
         <button type="submit" class="button">Add to board</button>
-        <a href="/board" class="button button--secondary">Show board</a>
+        <a :href="`/${boardId}/board`" class="button button--secondary"
+          >Show board</a
+        >
       </form>
     </main>
   </div>
