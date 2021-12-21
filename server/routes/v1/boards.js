@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { PrismaClient } = require('@prisma/client');
 
-const prisma = new PrismaClient();
+const prisma = global.prisma;
 
 // GET a board by id
 router.get('/:id', async function (req, res, next) {

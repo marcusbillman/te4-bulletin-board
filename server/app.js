@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const logger = require('morgan');
+const { PrismaClient } = require('@prisma/client');
 
 const app = express();
 const server = require('http').Server(app);
@@ -15,6 +16,8 @@ const io = require('socket.io')(server, {
 io.on('connection', (socket) => {
   console.log('a user connected');
 });
+
+global.prisma = new PrismaClient();
 
 app.use(cors());
 app.use(logger('dev'));

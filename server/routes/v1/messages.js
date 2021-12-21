@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const { PrismaClient } = require('@prisma/client');
 const {
   uniqueNamesGenerator,
   adjectives,
@@ -8,7 +7,7 @@ const {
   animals,
 } = require('unique-names-generator');
 
-const prisma = new PrismaClient();
+const prisma = global.prisma;
 
 // GET all messages
 router.get('/', async function (req, res, next) {
