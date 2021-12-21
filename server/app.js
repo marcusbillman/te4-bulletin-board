@@ -28,6 +28,8 @@ app.use(function (req, res, next) {
 });
 
 const messagesRouter = require('./routes/v1/messages');
+const boardsRouter = require('./routes/v1/boards');
 app.use('/api/v1/messages', messagesRouter);
+app.use('/api/v1/boards', boardsRouter);
 
 module.exports = { app, server };
