@@ -18,4 +18,12 @@ model Message {
   pinned    Boolean  @default(false)
   author    String
   createdAt DateTime @default(now())
+  board     Board?   @relation(fields: [boardId], references: [id])
+  boardId   String?
+}
+
+model Board {
+  id        String    @id
+  messages  Message[]
+  createdAt DateTime  @default(now())
 }
